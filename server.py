@@ -10,6 +10,8 @@ def _server():
 	server_socket.listen(2)
 	connection, address = server_socket.accept()
 	
+	#so far would only handle one client. Should be capable of handling multiple clients
+	
 	while True:
 		#receiving data from the client
 		data = connection.recv(1024).decode()

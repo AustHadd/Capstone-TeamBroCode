@@ -1,8 +1,10 @@
 import socket
 import threading
 
-HOST = '' #server ip address
-PORT = 1234
+#client will need to eventually replace gethostname with a constant ip address
+#right now the client would only connect to server with the same ip
+host = socket.gethostname() #server ip address
+port = 1234
 
 #will need to add code to determine the parking availability from the camera
 

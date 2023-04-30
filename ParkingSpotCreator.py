@@ -40,11 +40,14 @@ class ParkingSpaces:
         if count < 800:
             color = (0, 255, 0)
             thickness = 5
+            available = True
         else:
             color = (0, 0, 255)
             thickness = 2
+            available = False
 
         cv2.rectangle(img, tuple(self.positionList[0]), tuple(self.positionList[1]), color, thickness)
+        return available
 
 
 # loads the parking spaces that have been created from file
@@ -106,9 +109,14 @@ while True:
     for space in spacesList:
         cv2.rectangle(img, tuple(space.positionList[0]), tuple(space.positionList[1]), (255, 0, 255), 2)
 
+    count = 0
+
     # checks each parking space for car
     for i in spacesList:
-        i.check_parking_space(img_dil)
+        if i.check_parking_space(img_dil):
+            count += 1
+
+    cvzone.putTextRect(img, str(count)+"/"+str(len(spacesList))+" available spots", (0, 20), scale=1.5, thickness=2, offset=0)
 
     # displays the image
     cv2.imshow("Image", img)

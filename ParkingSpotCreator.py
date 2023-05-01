@@ -10,13 +10,19 @@ class ParkingSpaces:
     def __init__(self, pos):
         self.positionList = pos.copy()
 
-    def click_detection(self, pos):
+        def click_detection(self, pos):
         x, y = pos
 
         x1, y1 = self.positionList[0]
         x2, y2 = self.positionList[1]
 
-        if (x1 <= x <= x2) and (y1 <= y <= y2):
+        max_y = max(y1, y2)
+        min_y = min(y1, y2)
+
+        max_x = max(x1, x2)
+        min_x = min(x1, x2)
+
+        if (min_x <= x <= max_x) and (min_y <= y <= max_y):
             return True
         else:
             return False

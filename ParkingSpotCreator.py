@@ -11,21 +11,21 @@ class ParkingSpaces:
         self.positionList = pos.copy()
 
         def click_detection(self, pos):
-        x, y = pos
+            x, y = pos
 
-        x1, y1 = self.positionList[0]
-        x2, y2 = self.positionList[1]
+            x1, y1 = self.positionList[0]
+            x2, y2 = self.positionList[1]
 
-        max_y = max(y1, y2)
-        min_y = min(y1, y2)
+            max_y = max(y1, y2)
+            min_y = min(y1, y2)
 
-        max_x = max(x1, x2)
-        min_x = min(x1, x2)
+            max_x = max(x1, x2)
+            min_x = min(x1, x2)
 
-        if (min_x <= x <= max_x) and (min_y <= y <= max_y):
-            return True
-        else:
-            return False
+            if (min_x <= x <= max_x) and (min_y <= y <= max_y):
+                return True
+            else:
+                return False
 
     def check_parking_space(self, processed_image, base_img):
         # cv2.rectangle(img, tuple(self.positionList[0]), tuple(self.positionList[1]), (255, 0, 255), 2)

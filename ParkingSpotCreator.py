@@ -10,22 +10,22 @@ class ParkingSpaces:
     def __init__(self, pos):
         self.positionList = pos.copy()
 
-        def click_detection(self, pos):
-            x, y = pos
+    def click_detection(self, pos):
+        x, y = pos
 
-            x1, y1 = self.positionList[0]
-            x2, y2 = self.positionList[1]
+        x1, y1 = self.positionList[0]
+        x2, y2 = self.positionList[1]
 
-            max_y = max(y1, y2)
-            min_y = min(y1, y2)
+        max_y = max(y1, y2)
+        min_y = min(y1, y2)
 
-            max_x = max(x1, x2)
-            min_x = min(x1, x2)
+        max_x = max(x1, x2)
+        min_x = min(x1, x2)
 
-            if (min_x <= x <= max_x) and (min_y <= y <= max_y):
-                return True
-            else:
-                return False
+        if (min_x <= x <= max_x) and (min_y <= y <= max_y):
+            return True
+        else:
+            return False
 
     def check_parking_space(self, processed_image, base_img):
         # cv2.rectangle(img, tuple(self.positionList[0]), tuple(self.positionList[1]), (255, 0, 255), 2)
@@ -42,9 +42,9 @@ class ParkingSpaces:
 
         # cv2.imshow(str(self.positionList[0]), img_crop)
         pixel_count = cv2.countNonZero(img_crop)
-        cvzone.putTextRect(base_img, str(pixel_count), (min_x, min_y+20), scale=1.5, thickness=2, offset=0)
+        #cvzone.putTextRect(base_img, str(pixel_count), (min_x, min_y+20), scale=1.5, thickness=2, offset=0)
 
-        if pixel_count < 800:
+        if pixel_count < 200:
             available = True
         else:
             available = False
@@ -86,12 +86,12 @@ def mouse_click(events, x, y, flags, params):
             # otherwise no collision detected
 
     # logs the parking spaces that have been created into a file
-    with open('CarSpacePos.pkl', 'wb') as f:
-        dill.dump(spacesList, f)
+
 
 
 def create_parking_spots():
-    cap = cv2.VideoCapture('parkinglot.mp4')
+
+    cap = cv2.VideoCapture('BirdsEyeViewParkingLot.mp4')
     success, img = cap.read()
 
     cv2.imwrite("frame_0.jpg", img)
@@ -101,14 +101,17 @@ def create_parking_spots():
     while True:
         img = cv2.imread('frame_0.jpg')
 
+        with open('CarSpacePos.pkl', 'wb') as f:
+            dill.dump(spacesList, f)
+
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img_blur = cv2.GaussianBlur(img_gray, (3, 3), 1)
         img_thresh = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                            cv2.THRESH_BINARY_INV, 25, 16)
 
         # manipulate the image to make it easier to detect empty spaces
-        img_med = cv2.medianBlur(img_thresh, 5)
-        kernel = np.ones((3,3), np.int8)
+        img_med = cv2.medianBlur(img_thresh, 1)
+        kernel = np.ones((2,2), np.int8)
         img_dil = cv2.dilate(img_med, kernel, iterations=1)
 
         for space in spacesList:
@@ -133,6 +136,12 @@ def create_parking_spots():
 
         # displays the image
         cv2.imshow("Image", img)
+        # cv2.imshow("processed", img_dil)
 
         cv2.setMouseCallback("Image", mouse_click, posList)
-        cv2.waitKey(1)
+        
+        #breaks the loop when any key is pressed
+        c = cv2.waitKey(1)
+
+        if c > -1:
+            break

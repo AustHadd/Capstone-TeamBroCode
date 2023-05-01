@@ -7,10 +7,8 @@ import ParkingSpotCreator
 
 ParkingSpotCreator.create_parking_spots()
 
-print('hello')
-
 # Video
-cap = cv2.VideoCapture('parkinglot.mp4')
+cap = cv2.VideoCapture('BirdsEyeViewParkingLot.mp4')
 
 with open('CarSpacePos.pkl', 'rb') as f:
     spacesList = dill.load(f)
@@ -42,11 +40,11 @@ while True:
         available = i.check_parking_space(img_dil, img)
         if available:
             color = (0, 255, 0)
-            thickness = 5
+            thickness = 2
             count += 1
         else:
             color = (0, 0, 255)
-            thickness = 2
+            thickness = 1
 
         cv2.rectangle(img, tuple(i.positionList[0]), tuple(i.positionList[1]), color, thickness)
 
@@ -54,4 +52,7 @@ while True:
                        thickness=2, offset=0)
 
     cv2.imshow("Image", img)
-    cv2.waitKey(1)
+    c = cv2.waitKey(10)
+
+    if c > -1:
+        break

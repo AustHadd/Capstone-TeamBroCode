@@ -56,7 +56,15 @@ Adding it into the parking lot map differentiates
 the various types of spots and zones to a specific
 spot.
 
-
+# NON FUNCTIONAL 
+ ## USABILITY 
+  ### USER INTERFACE 
+   * USER INTERFACE 
+      * The system shall display the vacant & occupied parking spots in a simple UI.
+      * Each spot shall be represented by a colored rectangle depending on its status
+      * The information should be easily accessible by a mobile device
+      * Dark Mode
+   
 
 
 ## IMPORTANT LIBRARIES TO INSTALL 

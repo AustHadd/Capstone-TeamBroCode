@@ -1,5 +1,5 @@
 # Capstone-TeamBroCode
-
+ ### This is a phone aplication, and the the framework being used is React Native EXPO 
 ## Paking Availability Front End 
 
 Parking availability is an aplication developed to help, facilitate and save time to drivers. This aplication is being developed for a group of 6 UNT students dedicated 

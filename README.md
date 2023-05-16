@@ -58,12 +58,33 @@ spot.
 
 # NON FUNCTIONAL 
  ## USABILITY 
-  ### USER INTERFACE 
-   * USER INTERFACE 
+ * USER INTERFACE 
       * The system shall display the vacant & occupied parking spots in a simple UI.
       * Each spot shall be represented by a colored rectangle depending on its status
       * The information should be easily accessible by a mobile device
       * Dark Mode
+ ## Accessibility
+   * Each spot shall give a text display of its occupancy and ID if selected via the
+application.
+   * The open spot will be visible in green color in the app. Otherwise, it will show in red in
+      the app
+   * The user will see the traffic flow and display the popular times in order to show the
+      user how crowded it is.
+   * Handicap design The application is going to have handicap signs within the app, so
+     the users don’t waste their time on going to those spots that show as available.
+   * Text design, Being able to resize the text and color font for the text on the application
+     for a better experience for the user
+   * Color blind mode
+ ## Performance
+  * The System shall give accurate displays of each parking spot
+    ** Each sensor shall check its respective parking spots every minute to determine their
+       availability
+  * The system’s performance will depend upon the connection of the sensors to the server as
+       well as the client’s connection to the server
+● The system shall give accurate display of the popular times
+    ** Each sensor should send a signal and display the amount of people that are currently
+       parked and show a graph that shows from no-busy to full
+
    
 
 

@@ -1,0 +1,5 @@
+LIBRARIES TO BE INSTALLED
+npm install @react-navigation/native
+npm install @react-navigation/material-top-tabs
+npm install @react-navigation/stack
+ npm install @react-navigation/native @react-navigation/stack

@@ -7,7 +7,9 @@ export default class InitialPage extends Component {
     return (
     <View style={{flex: 1}}>
     
-
+ <View>
+  <Text>fwjeifjwe</Text>
+ </View>
 
    
 </View>

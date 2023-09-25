@@ -3,6 +3,7 @@
     "name": "parking",
     "slug": "parking",
     "version": "1.0.0",
+    "proxy": "https://localhost:5000",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

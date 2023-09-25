@@ -1,9 +1,11 @@
 
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
+import {MaterialIcons} from "@expo/vector-icons"
+import { Image } from 'react-native';
 import React, { useRef, useEffect } from 'react';
 import { Animated } from 'react-native';
-import {ImageBackground, ScrollView ,Image,SafeAreaView, StyleSheet, Text, Touchable, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, ScrollView,SafeAreaView, StyleSheet, Text, Touchable, TouchableOpacity, View, Modal} from 'react-native';
 import profile from '../assets/profile.png'
 import home from '../assets/home.png'
 import notifications from '../assets/notifications.png'
@@ -22,38 +24,66 @@ import SearchScreen from './SearchScreen';
 import ColorBlindScreen from './ColorBlindScreen';
 import DarkModeScreen from './DarkModeScreen';
 import HelpCenterScreen from './HelpCenterScreen';
+import ViewProfile from './ViewProfile';
 import NotificationsScreen from './NotificationsScreen';
 import ParkingHistoryScreen from './ParkingHistoryScreen';
 import PrivacyScreen from './PrivacyScreen';
 import RatingScreen from './RatingScreen';
 import RushHourScreen from './RushHourScreen';
 import HomeMenu from './home';
-
+import selectedImage from './ViewProfile'; 
 // import Navigator from './routes/homeStack';
+import * as ImagePicker from 'expo-image-picker';
+import { imagesDATAURL } from './data';
+import viewProfile from './ViewProfile';
+ import { AntDesign } from '@expo/vector-icons'
 
 export default function Home() {
  const [currentTab, setCurrentTab] = useState("Home");
  //to get the current status of menu .. 
  const [showMenu, setShowMenu] = useState(false);
  //animated properties
-
- const offsetValue = useRef(new Animated.Value(0)).current;
+  const offsetValue = useRef(new Animated.Value(0)).current;
 //scale initially msut be 1  
  const scaleValue = useRef(new Animated.Value(1)).current;
  const closeButtonOffset = useRef(new Animated.Value(0)).current;
+// const sharedImageSource = {uri:selectedImage};
 
-
+   const cameraIcon = (
+  <MaterialIcons
+    name="photo-camera"
+    size={32}
+    color='primary'
+  />
+); 
   return (
     <SafeAreaView style={styles.container}>
     
       <View styles={{justifyContent: 'flex-start', padding: 15}}>      
-            <Image source={profile} style={{
-             width: 60, //profile photo of the user 
-             height: 60,
-             borderRadius: 10,
-             marginTop: 8,
+    <Image
+      source={profile}
+      resizeMode='contain'
+      style={{
+          height:150,
+          width:150,
+          borderRadius:85,
+          borderColor: 'primary',
+          borderWidth:2,
+          marginTop: 10
+      }}
+
+    />
+
+
+   {/* <Image source={selectedImage} style={{
+             width: 170, //profile photo of the user 
+             height: 170,
+             borderRadius: 85,
+             borderWidth:2,
+             borderColor:'primary',
+            //  marginTop: 8,
              }}>   
-             </Image>
+             </Image>           */}
  
             <Text style={{
                fontSize:20,//Name of the user 
@@ -63,17 +93,7 @@ export default function Home() {
              }}>Bob</Text>
 
            <TouchableOpacity>
-             <Text style ={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingVertical: 12,
-              paddingRight: 1,
-              paddingHorizontal: 32,
-              borderRadius: 4,
-              borderWidth: 2,
-              borderBottomRightRadius: 2,
-              borderColor: 'black',
-            }}>view profile</Text>
+            {TabButton(currentTab, setCurrentTab, "ViewProfile","person")}
            </TouchableOpacity>
 
 {/* ===================================This section is for the profile options, name, photo, view profile, etc navigation ======================================== */} 
@@ -85,18 +105,19 @@ export default function Home() {
                     flexGrow: 1, 
                     marginTop: 10 
                         }}>
-                    {TabButton(currentTab, setCurrentTab, "Home", home)}
-                    {TabButton(currentTab, setCurrentTab, "Search", search)}
-                    {TabButton(currentTab, setCurrentTab, "Parking History", parkingHistory)} 
-                    {TabButton(currentTab, setCurrentTab, "Rush Hour", rushHour)} 
-                     {TabButton(currentTab, setCurrentTab, "Color Blind Mode", colorBlind)}
-                    {TabButton(currentTab, setCurrentTab, "Dark Mode", darkMode)} 
-                    {TabButton(currentTab, setCurrentTab, "Settings", settings)}
-                                         {TabButton(currentTab, setCurrentTab, "Sign Up", privacy)} 
-                     {TabButton(currentTab, setCurrentTab, "Rate Us", rating)} 
+                    {TabButton(currentTab, setCurrentTab, "Home", "home")}
+                    {/* {TabButton(currentTab, setCurrentTab, "ViewProfile", home)} */}
+                    {TabButton(currentTab, setCurrentTab, "Search", "search")}
+                    {TabButton(currentTab, setCurrentTab, "Parking History", "parkingHistory")} 
+                    {TabButton(currentTab, setCurrentTab, "Rush Hour", "")} 
+                     {TabButton(currentTab, setCurrentTab, "Color Blind Mode", "eye")}
+                    {TabButton(currentTab, setCurrentTab, "Dark Mode", "")} 
+                    {TabButton(currentTab, setCurrentTab, "Settings", "settings")}
+                     {TabButton(currentTab, setCurrentTab, "Sign Up", "sign-in")} 
+                     {TabButton(currentTab, setCurrentTab, "Rate Us", "")} 
                      {/* {TabButton(currentTab, setCurrentTab, "Sign Up", privacy)}  */}
-                    {TabButton(currentTab, setCurrentTab, "Help Center", helpCenter)} 
-                    {TabButton(currentTab, setCurrentTab, "Notifications", notifications)}
+                    {TabButton(currentTab, setCurrentTab, "Help Center", "")} 
+                    {TabButton(currentTab, setCurrentTab, "Notifications", "notifications")}
                    </ScrollView>
                 }
             </View>
@@ -142,7 +163,7 @@ export default function Home() {
 //=======================================================
                 Animated.timing(scaleValue, {
                   toValue: showMenu ? 1 : 0.88,
-                  duration: 300,
+                  duration: 600,
                   useNativeDriver: true
                 })
                 .start()
@@ -156,7 +177,7 @@ export default function Home() {
                 .start()
 //=======================================================
                   Animated.timing(closeButtonOffset, {
-                  toValue: !showMenu ?-30 : 0,
+                  toValue: !showMenu ?-30: 0,
                   duration: 300,
                   useNativeDriver: true
                 })
@@ -170,7 +191,7 @@ export default function Home() {
                    width: 20,
                    height: 20,
                    tintColor: 'black',
-                   marginTop: 40,
+                   marginTop: 15,
                   }}>   
                  </Image>
              
@@ -181,6 +202,10 @@ export default function Home() {
               currentTab === 'Home' ? 
                 (
                   <HomeMenu/>
+                ):
+                 currentTab === 'ViewProfile' ? 
+                (
+                  <ViewProfile/>
                 ):
               currentTab === 'Settings' ? 
                 (
@@ -247,49 +272,47 @@ export default function Home() {
   
 }
 //TO BE FIXED 
-const TabButton = (currentTab, setCurrentTab, title, image) =>{
+const TabButton = (currentTab, setCurrentTab, title, iconName) => {
   return (
-     <TouchableOpacity onPress={()=>{ 
-      if(title == "LogOut") {
-        //do thte stuff 
-      }else {
-      setCurrentTab(title)
-      }
-     }}>
-     {/* ========================================this manipulates the buttoms from the menu =============================== */}
-        <View style = {{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 8,
-                backgroundColor: currentTab == title ? 'white' : 'transparent',
-                 paddingLeft: 13,
-                paddingRight: 35,
-                borderRadius:8,
-                marginBottom: 15
-        }}>
-         <Image source={image} style={{
-              width: 25,
-              height: 25,
-              borderRadius: 10,
-              marginTop: 8,
-             }}></Image>
-         <Text style={{
-            fontSize:15,
-            fontWeight: 'bold',
-            paddingLeft: 15
-          }}>{title}</Text>
-       </View>
- {/* ========================================this manipulates the buttoms from the menu =============================== */}
-
+    <TouchableOpacity onPress={() => setCurrentTab(title)}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingVertical: 8,
+          backgroundColor: currentTab === title ? "white" : "transparent",
+          paddingLeft: 13,
+          paddingRight: 35,
+          borderRadius: 8,
+          marginBottom: 15,
+        }}
+      >
+        <MaterialIcons
+          name={iconName}
+          size={25} // Adjust the size as needed
+          color={currentTab === title ? "black" : "white"}
+          style={{ marginRight: 10 }} // Add some spacing between icon and text
+        />
+        <Text
+          style={{
+            fontSize: 15,
+            fontWeight: "bold",
+            color: "black",
+            paddingLeft: 5, // Adjust the spacing between icon and text
+          }}
+        >
+          {title}
+        </Text>
+      </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 //============================== this controls the background from the menu drawer==================================
 const styles = StyleSheet.create({
   container: {
    flex:1,
-   backgroundColor: 'aquamarine',
+   backgroundColor: '#00853E',
    alignItems: 'flex-start',
    justifyContent: 'flex-start',
   },

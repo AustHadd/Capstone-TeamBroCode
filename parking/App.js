@@ -4,9 +4,10 @@ import { Animated, Dimensions, Image, Platform, StyleSheet, Text, TouchableOpaci
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import selectedImage from './screens/ViewProfile'
 
 import Home from './screens/home';
+import ViewProfile from './screens/ViewProfile';
 import HomeScreen from './screens/HomeScreen';
 import RushHourScreen from './screens/RushHourScreen';
 import RatingScreen from './screens/RatingScreen';
@@ -28,10 +29,11 @@ function HomeStack() {
     <Stack.Navigator>
       <Stack.Screen name="Parking availability" component={HomeScreen} options={{
         headerStyle: {
-          backgroundColor: 'aquamarine',
+          backgroundColor: '#00853E',
         },
       }} />
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="ViewProfile" component={ViewProfile}/>
       <Stack.Screen name="RushHour" component={RushHourScreen} />
       <Stack.Screen name="RateUs" component={RatingScreen} />
       <Stack.Screen name="ColorBlindMode" component={ColorBlindScreen} />
@@ -53,3 +55,41 @@ export default function App(){
        </NavigationContainer>
   );
 }
+
+// =============================EVERYTHING ABOVE ORIGINAL CODE ======================
+
+// import React, {useContext,useState, useEffect} from 'react';
+// import { View, StyleSheet, Text } from 'react-native';
+// import {Context} from "./assets/components/GlobalContext/GlobalContext.js/"
+
+ 
+//   import React from "react";
+// import { NavigationContainer } from '@react-navigation/native';
+// import { View } from 'react-native';
+// import Navigator from './assets/components/GlobalContext/Navigator.js'
+
+ 
+
+
+//  import {Context, Provider} from "./assets/components/GlobalContext/GlobalContext.js"
+
+// function App(props) {
+
+//   return(
+//     <Provider>
+//       <View style={{flex:1}}>
+//         <NavigationContainer>
+//           {/* <Navigator /> */}
+//         </NavigationContainer>
+//       </View>
+//     </Provider>
+
+//     )
+
+
+
+
+
+// }
+
+// export default App;

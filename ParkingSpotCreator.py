@@ -2,6 +2,7 @@ import cv2
 import dill
 import numpy as np
 import cvzone
+from vidstab import VidStab
 
 posList = []
 
@@ -40,9 +41,7 @@ class ParkingSpaces:
 
         img_crop = processed_image[min_y:max_y, min_x:max_x]
 
-        # cv2.imshow(str(self.positionList[0]), img_crop)
         pixel_count = cv2.countNonZero(img_crop)
-        #cvzone.putTextRect(base_img, str(pixel_count), (min_x, min_y+20), scale=1.5, thickness=2, offset=0)
 
         if pixel_count < 200:
             available = True
@@ -92,7 +91,11 @@ def mouse_click(events, x, y, flags, params):
 def create_parking_spots():
 
     cap = cv2.VideoCapture('BirdsEyeViewParkingLot.mp4')
+
+    stabilizer = VidStab()
     success, img = cap.read()
+    stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)
+
 
     cv2.imwrite("frame_0.jpg", img)
 
@@ -100,11 +103,11 @@ def create_parking_spots():
     # it uses opencv to read in the given image or video
     while True:
         img = cv2.imread('frame_0.jpg')
-
+        stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)
         with open('CarSpacePos.pkl', 'wb') as f:
             dill.dump(spacesList, f)
 
-        img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img_gray = cv2.cvtColor(stable_frame, cv2.COLOR_BGR2GRAY)
         img_blur = cv2.GaussianBlur(img_gray, (3, 3), 1)
         img_thresh = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                            cv2.THRESH_BINARY_INV, 25, 16)
@@ -115,13 +118,13 @@ def create_parking_spots():
         img_dil = cv2.dilate(img_med, kernel, iterations=1)
 
         for space in spacesList:
-            cv2.rectangle(img, tuple(space.positionList[0]), tuple(space.positionList[1]), (255, 0, 255), 2)
+            cv2.rectangle(stable_frame, tuple(space.positionList[0]), tuple(space.positionList[1]), (255, 0, 255), 2)
 
         count = 0
 
         # checks each parking space for car
         for i in spacesList:
-            available = i.check_parking_space(img_dil, img)
+            available = i.check_parking_space(img_dil, stable_frame)
             if available:
                 color = (0, 255, 0)
                 thickness = 5
@@ -130,17 +133,15 @@ def create_parking_spots():
                 color = (0, 0, 255)
                 thickness = 2
 
-            cv2.rectangle(img, tuple(i.positionList[0]), tuple(i.positionList[1]), color, thickness)
+            cv2.rectangle(stable_frame, tuple(i.positionList[0]), tuple(i.positionList[1]), color, thickness)
 
-        cvzone.putTextRect(img, str(count)+"/"+str(len(spacesList))+" available spots", (0, 20), scale=1.5, thickness=2, offset=0)
+        cvzone.putTextRect(stable_frame, str(count)+"/"+str(len(spacesList))+" available spots", (0, 20), scale=1.5, thickness=2, offset=0)
 
         # displays the image
-        cv2.imshow("Image", img)
+        cv2.imshow("Image", stable_frame)
         # cv2.imshow("processed", img_dil)
 
         cv2.setMouseCallback("Image", mouse_click, posList)
-        
-        #breaks the loop when any key is pressed
         c = cv2.waitKey(1)
 
         if c > -1:

@@ -78,7 +78,6 @@ export default function App() {
                         }}>
                     {TabButton(currentTab, setCurrentTab, "Home", home)}
                     {TabButton(currentTab, setCurrentTab, "Rush Hour", rushHour)} 
-                    {TabButton(currentTab, setCurrentTab, "Rate Us", rating)} 
                     {TabButton(currentTab, setCurrentTab, "Color Blind Mode", colorBlind)}
                     {TabButton(currentTab, setCurrentTab, "Dark Mode", darkMode)} 
                     {TabButton(currentTab, setCurrentTab, "Parking History", parkingHistory)} 
@@ -86,7 +85,7 @@ export default function App() {
                     {TabButton(currentTab, setCurrentTab, "Help Center", helpCenter)} 
                     {TabButton(currentTab, setCurrentTab, "Search", search)}
                     {TabButton(currentTab, setCurrentTab, "Notifications", notifications)}
-                    {TabButton(currentTab, setCurrentTab, "Settings", settings)}
+                    {TabButton(currentTab, setCurrentTab, "Rate Us", rating)}
                   </ScrollView>
                 }
             </View>
@@ -167,7 +166,7 @@ export default function App() {
                   {/* home button*/}
               </TouchableOpacity>
                <Text style = {{
-                fontSze: 20,
+                fontSize: 20,
                 fontWeight: 'bold',
                 color: 'black',
                 paddingTop: 20 

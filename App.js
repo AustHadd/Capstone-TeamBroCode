@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
  
 import Home from './screens/home'
+import Settings from './screens/settings';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -17,7 +18,12 @@ export default function App(){
                  name="Home"
                  component={Home}
                  options={{ tabBarLabel: 'Home' }}
-               />
+              />
+              <Tab.Screen
+                  name="Settings"
+                  component={Settings}
+                  options={{ tabBarLabel: 'Settings' }}
+              />
           </Tab.Navigator>
        </NavigationContainer>
   );

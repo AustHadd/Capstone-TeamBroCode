@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@react-navigation/material-top-tabs": "^6.6.4",
+    "@react-navigation/native": "^6.1.8",
+    "@react-navigation/stack": "^6.3.18"
+  }
+}

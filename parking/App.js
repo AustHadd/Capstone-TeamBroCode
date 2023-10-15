@@ -18,7 +18,7 @@ import PrivacyScreen from './screens/PrivacyScreen';
 import HelpCenterScreen from './screens/HelpCenterScreen';
 import SearchScreen from './screens/SearchScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
-import SettingsScreen from './screens/SettingsScreen';
+import SettingsScreen from './screens/SettingsScreen';              // (Nathan's responsibility throughout sprint 1 has been the settings feature)
 
  const Stack = createStackNavigator();
 
@@ -43,7 +43,7 @@ function HomeStack() {
       <Stack.Screen name="HelpCenter" component={HelpCenterScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />           
     </Stack.Navigator>
   );
 }

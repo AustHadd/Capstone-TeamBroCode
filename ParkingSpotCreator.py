@@ -90,7 +90,7 @@ def mouse_click(events, x, y, flags, params):
 
 def create_parking_spots():
 
-    cap = cv2.VideoCapture('BirdsEyeViewParkingLot.mp4')
+    cap = cv2.VideoCapture('OverViewParking2.mp4')
 
     stabilizer = VidStab()
     success, img = cap.read()

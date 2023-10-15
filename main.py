@@ -10,7 +10,7 @@ import ParkingSpotCreator
 ParkingSpotCreator.create_parking_spots()
 
 # Video
-cap = cv2.VideoCapture('BirdsEyeViewParkingLot.mp4')
+cap = cv2.VideoCapture('OverViewParking2.mp4')
 
 # initialize the video stabilizer
 stabilizer = VidStab()

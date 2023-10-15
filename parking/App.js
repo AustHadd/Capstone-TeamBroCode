@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import selectedImage from './screens/ViewProfile'
 
 import Home from './screens/home';
+import SettingsScreen from './screens/SettingsScreen';              // (Nathan's responsibility throughout sprint 1 has been the settings feature)
 import ViewProfile from './screens/ViewProfile';
 import HomeScreen from './screens/HomeScreen';
 import RushHourScreen from './screens/RushHourScreen';
@@ -18,7 +19,6 @@ import PrivacyScreen from './screens/PrivacyScreen';
 import HelpCenterScreen from './screens/HelpCenterScreen';
 import SearchScreen from './screens/SearchScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
-import SettingsScreen from './screens/SettingsScreen';              // (Nathan's responsibility throughout sprint 1 has been the settings feature)
 
  const Stack = createStackNavigator();
 
@@ -33,6 +33,7 @@ function HomeStack() {
         },
       }} />
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="ViewProfile" component={ViewProfile}/>
       <Stack.Screen name="RushHour" component={RushHourScreen} />
       <Stack.Screen name="RateUs" component={RatingScreen} />
@@ -42,8 +43,7 @@ function HomeStack() {
       <Stack.Screen name="PrivacyPolicy" component={PrivacyScreen} />
       <Stack.Screen name="HelpCenter" component={HelpCenterScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
-      <Stack.Screen name="Notifications" component={NotificationsScreen} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />           
+      <Stack.Screen name="Notifications" component={NotificationsScreen} />       
     </Stack.Navigator>
   );
 }

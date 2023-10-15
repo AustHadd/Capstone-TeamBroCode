@@ -106,13 +106,13 @@ export default function Home() {
                     marginTop: 10 
                         }}>
                     {TabButton(currentTab, setCurrentTab, "Home", "home")}
-                    {/* {TabButton(currentTab, setCurrentTab, "ViewProfile", home)} */}
+                          {/* {TabButton(currentTab, setCurrentTab, "ViewProfile", home)} */}
+                    {TabButton(currentTab, setCurrentTab, "Settings", "settings")}
                     {TabButton(currentTab, setCurrentTab, "Search", "search")}
                     {TabButton(currentTab, setCurrentTab, "Parking History", "parkingHistory")} 
                     {TabButton(currentTab, setCurrentTab, "Rush Hour", "")} 
                      {TabButton(currentTab, setCurrentTab, "Color Blind Mode", "eye")}
                     {TabButton(currentTab, setCurrentTab, "Dark Mode", "")} 
-                    {TabButton(currentTab, setCurrentTab, "Settings", "settings")}
                      {TabButton(currentTab, setCurrentTab, "Sign Up", "sign-in")} 
                      {TabButton(currentTab, setCurrentTab, "Rate Us", "")} 
                      {/* {TabButton(currentTab, setCurrentTab, "Sign Up", privacy)}  */}

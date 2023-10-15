@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { TouchableOpacity } from 'react-native';
 import UNT1 from '../assets/UNTbackground1.png'
 import profileIcon from '../assets/profile.png'
 

@@ -16,8 +16,7 @@ def parking_availability():
     ParkingSpotCreator.create_parking_spots()
 
     # Video
-    cap = cv2.VideoCapture(
-        "D:/Coding/testingparking/parkingavailability/parkingavailability/BirdsEyeViewParkingLot.mp4")
+    cap = cv2.VideoCapture("parkingavailability/BirdsEyeViewParkingLot.mp4")
 
     # initialize the video stabilizer
     stabilizer = VidStab()

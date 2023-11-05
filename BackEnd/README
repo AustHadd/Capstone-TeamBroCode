@@ -5,3 +5,6 @@ Then search the Ip IPv4 Address.
 This is the number used to run the server
 Just filled the xxx with numbers
 py manage.py runserver 192.xxx.x.xx:8000
+
+FirstDjango is the server and FirstApp is the frontend, they need to be run simultaneously to work
+A message Saying Good Json will be pront on the frontend terminal saying that it was fetched succesfully. 

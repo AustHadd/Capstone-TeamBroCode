@@ -1,0 +1,7 @@
+
+
+THINGS TO INSTALL 
+npm install @react-navigation/native
+npm install react-native-reanimated react-native-gesture-handler react-native-screens
+npm install @react-navigation/material-top-tabs
+npm install react-navigation

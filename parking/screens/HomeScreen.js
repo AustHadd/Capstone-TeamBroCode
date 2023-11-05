@@ -27,7 +27,7 @@ import HelpCenterScreen from './HelpCenterScreen';
 import ViewProfile from './ViewProfile';
 import NotificationsScreen from './NotificationsScreen';
 import ParkingHistoryScreen from './ParkingHistoryScreen';
-import PrivacyScreen from './PrivacyScreen';
+import PrivacyScreen from './SignUp';
 import RatingScreen from './RatingScreen';
 import RushHourScreen from './RushHourScreen';
 import HomeMenu from './home';
@@ -108,16 +108,16 @@ export default function Home() {
                     {TabButton(currentTab, setCurrentTab, "Home", "home")}
                     {/* {TabButton(currentTab, setCurrentTab, "ViewProfile", home)} */}
                     {TabButton(currentTab, setCurrentTab, "Search", "search")}
-                    {TabButton(currentTab, setCurrentTab, "Parking History", "parkingHistory")} 
-                    {TabButton(currentTab, setCurrentTab, "Rush Hour", "")} 
-                     {TabButton(currentTab, setCurrentTab, "Color Blind Mode", "eye")}
-                    {TabButton(currentTab, setCurrentTab, "Dark Mode", "")} 
-                    {TabButton(currentTab, setCurrentTab, "Settings", "settings")}
+                    {/* {TabButton(currentTab, setCurrentTab, "Parking History", "parkingHistory")}  */}
+                    {/* {TabButton(currentTab, setCurrentTab, "Rush Hour", "")}  */}
+                     {/* {TabButton(currentTab, setCurrentTab, "Color Blind Mode", "eye")} */}
+                    {/* {TabButton(currentTab, setCurrentTab, "Dark Mode", "")}  */}
+                    {/* {TabButton(currentTab, setCurrentTab, "Settings", "settings")} */}
                      {TabButton(currentTab, setCurrentTab, "Sign Up", "sign-in")} 
-                     {TabButton(currentTab, setCurrentTab, "Rate Us", "")} 
+                     {/* {TabButton(currentTab, setCurrentTab, "Rate Us", "")}  */}
                      {/* {TabButton(currentTab, setCurrentTab, "Sign Up", privacy)}  */}
-                    {TabButton(currentTab, setCurrentTab, "Help Center", "")} 
-                    {TabButton(currentTab, setCurrentTab, "Notifications", "notifications")}
+                    {/* {TabButton(currentTab, setCurrentTab, "Help Center", "")}  */}
+                    {/* {TabButton(currentTab, setCurrentTab, "Notifications", "notifications")} */}
                    </ScrollView>
                 }
             </View>

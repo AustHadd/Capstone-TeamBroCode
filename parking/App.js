@@ -14,7 +14,7 @@ import RatingScreen from './screens/RatingScreen';
 import ColorBlindScreen from './screens/ColorBlindScreen';
 import DarkModeScreen from './screens/DarkModeScreen';
 import ParkingHistoryScreen from './screens/ParkingHistoryScreen';
-import PrivacyScreen from './screens/PrivacyScreen';
+import PrivacyScreen from './screens/SignUp';
 import HelpCenterScreen from './screens/HelpCenterScreen';
 import SearchScreen from './screens/SearchScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
@@ -34,16 +34,16 @@ function HomeStack() {
       }} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="ViewProfile" component={ViewProfile}/>
-      <Stack.Screen name="RushHour" component={RushHourScreen} />
-      <Stack.Screen name="RateUs" component={RatingScreen} />
+      {/* <Stack.Screen name="RushHour" component={RushHourScreen} /> */}
+      {/* <Stack.Screen name="RateUs" component={RatingScreen} /> */}
       <Stack.Screen name="ColorBlindMode" component={ColorBlindScreen} />
-      <Stack.Screen name="DarkMode" component={DarkModeScreen} />
+      {/* <Stack.Screen name="DarkMode" component={DarkModeScreen} /> */}
       <Stack.Screen name="ParkingHistory" component={ParkingHistoryScreen} />
       <Stack.Screen name="PrivacyPolicy" component={PrivacyScreen} />
       <Stack.Screen name="HelpCenter" component={HelpCenterScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
-      <Stack.Screen name="Notifications" component={NotificationsScreen} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      {/* <Stack.Screen name="Notifications" component={NotificationsScreen} /> */}
+      {/* <Stack.Screen name="Settings" component={SettingsScreen} /> */}
     </Stack.Navigator>
   );
 }

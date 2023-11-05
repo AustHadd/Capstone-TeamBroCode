@@ -1,1 +1,37 @@
-test
+import csv
+
+data=[]
+with open(r'C:\Users\tiern\OneDrive\Documents\GitHub\Capstone-TeamBroCode\parkingavailability\lot_availability.csv') as csvfile:
+    reader = csv.reader(csvfile, delimiter=',')
+    countLine = 0
+    
+    lotNumber = input("Enter a designated parking lot: ")
+    
+    if lotNumber == -1:
+        print('lot does not exist') 
+    
+    for row in reader:  
+        if countLine == 0:  
+            print(f'lot has {", ".join(row)}')  
+            countLine += 1  
+        #else:  
+           # print(f'\t{row[0]} roll number is:  {row[1]} and department is: {row[2]}.')  
+            #countLine +=1  
+    print(data) # This line will print number of line fro the file  
+    # read all lines using readline()
+    
+        
+    '''
+    lines = fp.readlines()
+    for row in lines:
+        # check if string present on a current line
+        word = '3,5'
+        # print(row.find(word))
+        # find() method returns -1 if the value is not found,
+        # if found it returns index of the first occurrence of the substring
+        if row.find(word) != -1:
+            print('string exists in file')
+            print('line Number:', lines.index(row))
+        else:
+            print("Error: result not found.")
+    '''

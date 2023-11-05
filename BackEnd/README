@@ -1,0 +1,7 @@
+Run server using
+type command prompt
+-ipconfig
+Then search the Ip IPv4 Address.
+This is the number used to run the server
+Just filled the xxx with numbers
+py manage.py runserver 192.xxx.x.xx:8000

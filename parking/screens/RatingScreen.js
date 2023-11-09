@@ -1,4 +1,8 @@
-import React, { Component } from 'react';   // fixed text component error : 11/9 3:28 pm
+// fixed text component error 11/9 2:30pm
+// updated to remove extra {} that continued to produce text component errors 11/9 3:53pm
+//     - updated styles and formatting for the rating stars
+
+import React, { Component } from 'react';  
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import UNT1 from '../assets/UNTbackground1.png'
@@ -29,7 +33,7 @@ export default class InitialPage extends Component {
                 >
                     <Image
                         source={i <= this.state.rating ? require('../assets/filledStar.png') : require('../assets/emptyStar.png')}
-                        style={{ width: 30, height: 30 }}
+                        style={styles.starImage}
                     />
                 </TouchableOpacity>
             );
@@ -37,10 +41,34 @@ export default class InitialPage extends Component {
         return stars;
     };
 
+    handleSubmission = () => {
+        // Implement backend submission logic here
+        console.log('Submit button pressed. Rating:', this.state.rating);
+        
+    };
+
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.container}>
+                <ImageBackground
+                    source={UNT1}
+                    style={styles.imageBackground}
+                >
 
+                </ImageBackground>
+
+                <Text style={styles.header}>Ratings</Text>
+
+                <View style={styles.ratingContainer}>
+                    {this.renderStars(5)}
+                </View>
+
+                <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={this.handleSubmission}
+                >
+                    <Text style={styles.buttonText}>Submit</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -49,7 +77,41 @@ export default class InitialPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
+    },
+    header: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingTop: 15,
+        paddingBottom: 8,
+    },
+    imageBackground: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        resizeMode: 'contain',
+        opacity: 0.3,
+        padding: 10,
+    },
+    ratingContainer: {
+        alignItems: 'center',
+        paddingTop: 50,
+    },
+    starImage: {
+        width: 30,
+        height: 30,
+    },
+    submitButton: {
+        marginTop: 20,
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    ratingContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingTop: 50,
     },
 });

@@ -1,8 +1,12 @@
+// 11/9 4pm
+    // updated to remove {} causing component errors
+
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import UNT1 from '../assets/UNTbackground1.png';
 
+// displays a simple paragraph that gives an abstract overview of the parking app
 export default function HelpCenterScreen() {
     return (
         <SafeAreaView style={styles.container}>
@@ -19,7 +23,6 @@ export default function HelpCenterScreen() {
                 }}
             >
                 <View>
-                    {/* Your content */}
                     <Text style={styles.title}>About Us</Text>
                     <Text style={styles.content}>
                         Welcome to our parking availability application!

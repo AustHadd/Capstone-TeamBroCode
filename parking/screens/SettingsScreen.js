@@ -1,6 +1,10 @@
+// 11/9 4:10pm
+// updated to add navigation to 'about' button which takes the user to the HelpCenterScreen
+
 // test with newer version of the front-end
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native';
 import UNT1 from '../assets/UNTbackground1.png'
@@ -8,17 +12,23 @@ import profileIcon from '../assets/profile.png'
 
 // initialize array of objects which represent the settings options
 const settingsOptions = [
-    { id: 1, name: 'Profile', icon: profileIcon },
-    { id: 2, name: 'Notifications', icon: profileIcon }, // Change icon
-    { id: 3, name: 'Privacy', icon: profileIcon }, // Change icon
+    { id: 1, name: 'Profile' },  
+    { id: 2, name: 'Notifications' }, // Change icon
+    { id: 3, name: 'Privacy', }, // Change icon
     // add more settings options
 ];
 
+
 export default function SettingsScreen() {
+
+    const navigation = useNavigation();
+    const navigateToHelpCenter = () => {
+        navigation.navigate('HelpCenter');
+    };
+
     return (
         <View style={styles.container}>
 
-            {/* Settings Buttons */}
             {settingsOptions.map(setting => (
                 <TouchableOpacity key={setting.id} style={styles.button} onPress={() => alert(`Selected: ${setting.name}`)}>
                     <Image source={setting.icon} style={styles.icon} />
@@ -26,8 +36,7 @@ export default function SettingsScreen() {
                 </TouchableOpacity>
             ))}
 
-            {/* Info Button */}
-            <TouchableOpacity style={styles.button} onPress={() => alert('About button pressed')}>
+            <TouchableOpacity style={styles.button} onPress={navigateToHelpCenter}>
                 <Text style={styles.buttonText}>About</Text>
             </TouchableOpacity>
         </View>
@@ -39,7 +48,6 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'aquamarine',
         padding: 20
     },
     button: {

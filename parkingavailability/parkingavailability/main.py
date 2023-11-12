@@ -4,6 +4,7 @@ import cv2
 import cvzone
 import dill
 import numpy as np
+import time
 from vidstab import VidStab
 
 from parkingavailability import ParkingSpotCreator
@@ -14,9 +15,18 @@ def parking_availability():
     print("main starting execution")
 
     ParkingSpotCreator.create_parking_spots()
-
+    print("parking spots created")
     # Video
-    cap = cv2.VideoCapture("parkingavailability/BirdsEyeViewParkingLot.mp4")
+    cap = cv2.VideoCapture("parkingavailability\BirdsEyeViewParkingLot.mp4")
+    print("loaded video starting execution")
+
+    print("main finished execution")
+    cv2.destroyAllWindows()
+
+
+def update_availability():
+    cap = cv2.VideoCapture("parkingavailability\BirdsEyeViewParkingLot.mp4")
+    print("loaded video starting execution")
 
     # initialize the video stabilizer
     stabilizer = VidStab()
@@ -70,7 +80,7 @@ def parking_availability():
                            scale=1.5,
                            thickness=2, offset=0)
 
-        # show the user the video frame by frame with specified delay
+        # commenting out where the video would be shown
         cv2.imshow("Image", stable_frame)
         c = cv2.waitKey(10)
 

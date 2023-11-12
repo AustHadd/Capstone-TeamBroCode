@@ -5,10 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-    <form method="post" action="/parking_spots">
+    <form method="post" action="/make_parking_spots">
         {% csrf_token %}
-        <button type="submit" name="run_script">Run Script</button>
+        <button type="submit" name="edit_parking">Create Parking Spots</button>
     </form>
+    <form method="post" action="/update_parking_spots">
+        {% csrf_token %}
+        <button type="submit" name="update_parking">Update Parking Availability</button>
+    </form>
+
 
 </body>
 </html>

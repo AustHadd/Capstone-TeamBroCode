@@ -3,6 +3,7 @@ import dill
 import numpy as np
 import cvzone
 from vidstab import VidStab
+import os
 
 posList = []
 
@@ -88,8 +89,9 @@ def mouse_click(events, x, y, flags, params):
 
 
 def create_parking_spots():
-    cap = cv2.VideoCapture("parkingavailability/BirdsEyeViewParkingLot.mp4")
-
+    #print(os.getcwd())
+    cap = cv2.VideoCapture("parkingavailability\BirdsEyeViewParkingLot.mp4")
+    #print(os.path.isfile("D:\Coding\main capstone\Capstone-TeamBroCode\parkingavailability\parkingavailability\BirdsEyeViewParkingLot.mp4"))
     stabilizer = VidStab()
     success, img = cap.read()
     stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)

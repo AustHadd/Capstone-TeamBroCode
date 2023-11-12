@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "parking",
-    "slug": "parking",
+    "name": "SearchBar",
+    "slug": "SearchBar",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

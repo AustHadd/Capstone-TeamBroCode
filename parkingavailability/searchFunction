@@ -9,7 +9,7 @@ with open(r'C:\Users\tiern\OneDrive\Documents\GitHub\Capstone-TeamBroCode\parkin
     
     for row in reader:  
         if countLine == 0:  
-            print(f'lot has {", ".join(row)}')  
+            print(lotNumber, f'has {", ".join(row)}')  
             countLine += 1  
         #else:  
            # print(f'\t{row[0]} roll number is:  {row[1]} and department is: {row[2]}.')  

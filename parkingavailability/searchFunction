@@ -7,9 +7,6 @@ with open(r'C:\Users\tiern\OneDrive\Documents\GitHub\Capstone-TeamBroCode\parkin
     
     lotNumber = input("Enter a designated parking lot: ")
     
-    if lotNumber == -1:
-        print('lot does not exist') 
-    
     for row in reader:  
         if countLine == 0:  
             print(f'lot has {", ".join(row)}')  
@@ -19,6 +16,17 @@ with open(r'C:\Users\tiern\OneDrive\Documents\GitHub\Capstone-TeamBroCode\parkin
             #countLine +=1  
     print(data) # This line will print number of line fro the file  
     # read all lines using readline()
+    
+    col = [x[0] for x in data]
+    
+    if lotNumber in col:
+        for x in range(0,len(data)):
+            if lotNumber == data[x][0]:
+                print(data[x])
+            
+    else:
+        print("Lot doesn't exist")
+    
     
         
     '''

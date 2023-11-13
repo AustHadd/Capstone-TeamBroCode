@@ -2,11 +2,24 @@ import csv
 
 data=[]
 with open(r'C:\Users\tiern\OneDrive\Documents\GitHub\Capstone-TeamBroCode\parkingavailability\lot_availability.csv') as csvfile:
-    reader = csv.reader(csvfile, delimiter=',')
-    countLine = 0
+    reader = csv.reader(csvfile)
+    for row in reader:
+        data.append(row)
+    #countLine = 0
     
-    lotNumber = input("Enter a designated parking lot: ")
+    #lotNumber = input("Enter a designated parking lot: ")
     
+    col = [x[0] for x in data]
+    
+    print(col)
+    
+    if lotNumber in col:
+        for x in range(0,len(data)):
+            if lotNumber == data[x][0]:
+                print(data[x])
+            
+    else:
+        print("Lot doesn't exist")
     for row in reader:  
         if countLine == 0:  
             print(lotNumber, f'has {", ".join(row)}')  
@@ -16,16 +29,7 @@ with open(r'C:\Users\tiern\OneDrive\Documents\GitHub\Capstone-TeamBroCode\parkin
             #countLine +=1  
     print(data) # This line will print number of line fro the file  
     # read all lines using readline()
-    
-    col = [x[0] for x in data]
-    
-    if lotNumber in col:
-        for x in range(0,len(data)):
-            if lotNumber == data[x][0]:
-                print(data[x])
-            
-    else:
-        print("Lot doesn't exist")
+
     
     
         

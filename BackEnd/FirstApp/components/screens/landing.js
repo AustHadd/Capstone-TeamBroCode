@@ -13,7 +13,7 @@ function Landing(props){
   return(
     <View style ={containers(appSettings).outerPage}>
       <Text>Hello User!</Text>
-      <Text>You are grewgerwgwre{(isLoggedIn)? '' : "Not "}logged in</Text>
+      <Text>You are grewgefewfwrwgwre{(isLoggedIn)? '' : "Not "}logged in</Text>
     </View>
   )
 

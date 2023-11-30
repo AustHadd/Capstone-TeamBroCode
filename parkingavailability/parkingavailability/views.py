@@ -13,8 +13,8 @@ def home(request):
     return render(request, "index.html", context)
 
 
-def parking_spots(request):
-    if request.method == 'POST' and 'run_script' in request.POST:
+def make_parking_spots(request):
+    if request.method == 'POST' and 'edit_parking' in request.POST:
         from . import main
 
         # threading is probably unnecessary, but just in case
@@ -23,3 +23,20 @@ def parking_spots(request):
         thread1.start()
 
         return redirect(request.META.get('HTTP_REFERER'))
+
+
+def update_parking_spots(request):
+    if request.method == 'POST' and 'update_parking' in request.POST:
+        from . import main
+
+        # threading is probably unnecessary, but just in case
+        que = queue.Queue()
+        thread1 = threading.Thread(target=main.update_availability())
+        thread1.start()
+
+        return redirect(request.META.get('HTTP_REFERER'))
+
+#def read_csv():
+#   if whatever
+#       read csv
+#       do stuff with csv data

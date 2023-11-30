@@ -3,6 +3,9 @@ import dill
 import numpy as np
 import cvzone
 from vidstab import VidStab
+import tkinter as tk
+from tkinter import filedialog
+import os
 
 posList = []
 
@@ -51,45 +54,87 @@ class ParkingSpaces:
         return available
 
 
-# loads the parking spaces that have been created from file
-try:
-    with open('CarSpacePos.pkl', 'rb') as f:
-        spacesList = dill.load(f)
-except FileNotFoundError:
-    # if there is no pre-existing file with the spacesList to load from make blank one
-    spacesList = []
-except dill.UnpicklingError:
-    print('Error Loading pickle data')
-
-
-def mouse_click(events, x, y, flags, params):
-    # on mouse click, log the x and y coordinates of the click
-    if events == cv2.EVENT_LBUTTONDOWN:
-        posList.append((x, y))
-
-    # on letting off the mouse, log the position and create the parking space
-    if events == cv2.EVENT_LBUTTONUP:
-        posList.append((x, y))
-        new_space = ParkingSpaces(posList)
-        spacesList.append(new_space)
-        posList.clear()
-
-    # right click checks if the user right-clicked inside a space and removes that space
-    if events == cv2.EVENT_RBUTTONDOWN:
-        click = (x, y)
-        for i in range(len(spacesList)):
-            if spacesList[i].click_detection(click):
-                # COLLISION DETECTED
-                spacesList.pop(i)
-                break
-            # otherwise no collision detected
-
-    # logs the parking spaces that have been created into a file
-
-
 def create_parking_spots():
-    cap = cv2.VideoCapture("parkingavailability/BirdsEyeViewParkingLot.mp4")
+    # defines the actions on mouse click
+    def mouse_click(events, x, y, flags, params):
+        # on mouse click, log the x and y coordinates of the click
+        if events == cv2.EVENT_LBUTTONDOWN:
+            posList.append((x, y))
 
+        # on letting off the mouse, log the position and create the parking space
+        if events == cv2.EVENT_LBUTTONUP:
+            posList.append((x, y))
+            new_space = ParkingSpaces(posList)
+            spacesList.append(new_space)
+            posList.clear()
+
+        # right click checks if the user right-clicked inside a space and removes that space
+        if events == cv2.EVENT_RBUTTONDOWN:
+            click = (x, y)
+            for i in range(len(spacesList)):
+                if spacesList[i].click_detection(click):
+                    # COLLISION DETECTED
+                    spacesList.pop(i)
+                    break
+                # otherwise no collision detected
+
+    directory = (os.getcwd())
+
+    # all testing TODO
+    for filename in os.listdir(directory):
+        if filename.endswith('.csv'):
+            print("hello")
+
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for dirname in dirnames:
+            if dirname == 'templates':
+                template_dir = directory + "\\" + dirname
+                print(template_dir)
+                for temp_dirpath, temp_dirnames, temp_filenames in os.walk(template_dir):
+                    for temp_filename in temp_filenames:
+                        print(temp_filename)
+        for filename in filenames:
+            if filename.endswith('.html'):
+                print("html hi")
+
+    # prompt the user-admin for a lot's footage to create a new lot or edit an existing one
+
+    # creates the window and hides a tkinter window that appears, but isn't used
+    app_window = tk.Tk()
+    app_window.overrideredirect(True)
+    app_window.attributes("-alpha", 0)
+
+    # what file are we expecting
+    my_filetypes = [('mp4 files', '.mp4')]
+
+    # the actual select file box
+    answer = filedialog.askopenfilename(parent=app_window,
+                                        initialdir=os.getcwd(),
+                                        title="Please select a feed",
+                                        filetypes=my_filetypes)
+
+    # collecting the filename for the selected feed
+    file_name = os.path.basename(answer)
+    file_name = (os.path.splitext(file_name)[0])
+
+    # remove the tkinter window since it is no longer needed
+    app_window.destroy()
+
+    # loads the parking spaces that have been created from file
+    try:
+        with open('lots/' + file_name + '/' + file_name + '.pkl', 'rb') as f:
+            spacesList = dill.load(f)
+    except FileNotFoundError:
+        # if there is no pre-existing file with the spacesList to load from make blank one
+        spacesList = []
+        directory = 'lots/' + file_name
+        os.makedirs(directory, exist_ok=True)
+        os.replace(answer, 'lots/' + file_name + '/' + file_name + '.mp4')
+    except dill.UnpicklingError:
+        print('Error Loading pickle data')
+
+    # load the selected feed with cv2
+    cap = cv2.VideoCapture(answer)
     stabilizer = VidStab()
     success, img = cap.read()
     stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)
@@ -100,8 +145,10 @@ def create_parking_spots():
     # it uses opencv to read in the given image or video
     while True:
         img = cv2.imread('frame_0.jpg')
+
         stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)
-        with open('CarSpacePos.pkl', 'wb') as f:
+
+        with open('lots/' + file_name + '/' + file_name + '.pkl', 'wb') as f:
             dill.dump(spacesList, f)
 
         img_gray = cv2.cvtColor(stable_frame, cv2.COLOR_BGR2GRAY)

@@ -9,6 +9,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+parkingavailability/parkingavailability/__pycache__/
 
 # macOS
 .DS_Store

@@ -11,3 +11,4 @@ def schedule_update():
     print("Scheduled update beginning")
     updateLots.update_availability()
     print("Scheduled update complete")
+#this is it where it is defined and thorws what the background task is and then we have to call it

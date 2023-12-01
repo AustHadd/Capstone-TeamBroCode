@@ -1,44 +1,57 @@
- import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
+// 11/9 4pm
+    // updated to remove {} causing component errors
+
+import React from 'react';
+import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import UNT1 from '../UNTbackground1.png'
-export default class InitialPage extends Component {
-  render() {
+import UNT1 from '../assets/UNTbackground1.png';
+
+// displays a simple paragraph that gives an abstract overview of the parking app
+export default function HelpCenterScreen() {
     return (
-    <View style={{flex: 1}}>
-  <ImageBackground source={UNT1} style={{
-    flex: 1,
-    width: '104%',
-    height: '100%',
-    justifyContent: 'center',
-    resizeMode: 'contain',
-    opacity: 0.3,
-    padding: 10,
-}}>
-    <View>
-        {/* Your content goes here */}
-    </View>
-</ImageBackground>
-
-
-  <Text style= {{
-          fontSize: 20,
-          fontWeight: 'bold',
-          paddingTop: 15,
-          paddingBottom: 8
-        }}> Help Center</Text>
-
-  <Text style= {{}}>Help Center</Text>
-</View>
-
+        <SafeAreaView style={styles.container}>
+            <ImageBackground
+                source={UNT1}
+                style={{
+                    flex: 1,
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'center',
+                    resizeMode: 'contain',
+                    opacity: 0.3,
+                    padding: 10,
+                }}
+            >
+                <View>
+                    <Text style={styles.title}>About Us</Text>
+                    <Text style={styles.content}>
+                        Welcome to our parking availability application!
+                        We are dedicated to making your parking experience easy and convenient.
+                        Our app helps you find available parking spaces and provides real-time updates on parking availability.
+                        We value your feedback and are committed to improving your parking experience.
+                    </Text>
+                </View>
+            </ImageBackground>
+        </SafeAreaView>
     );
-  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    container: {
+        flex: 1,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        paddingTop: 15,
+        paddingBottom: 8,
+        color: 'black',
+        textAlign: 'center',
+    },
+    content: {
+        fontSize: 16,
+        padding: 15,
+        color: 'black',
+        textAlign: 'left',
+    },
 });

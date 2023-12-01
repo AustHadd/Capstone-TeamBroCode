@@ -26,6 +26,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { imagesDATAURL } from './data';
 import viewProfile from './ViewProfile';
  import { AntDesign } from '@expo/vector-icons'
+import profile2 from '../MenuParkingImages/profile2.jpg'
 
 export default function Home() {
  const [currentTab, setCurrentTab] = useState("Home");
@@ -49,19 +50,18 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
     
       <View styles={{justifyContent: 'flex-start', padding: 15}}>      
-    <Image
-      source={profile}
-      resizeMode='contain'
-      style={{
-          height:150,
-          width:150,
-          borderRadius:85,
+     <Image
+        source={profile2}
+        resizeMode='cover'  // Use 'cover' to maintain the aspect ratio and cover the entire circle
+        style={{
+          height: 150,
+          width: 150,
+          borderRadius: 55,  // Half of the width/height to make it a perfect circle
           borderColor: 'primary',
-          borderWidth:2,
-          marginTop: 10
-      }}
-
-    />
+          borderWidth: 2,
+          marginTop: 10,
+        }}
+      />
 
 
    {/* <Image source={selectedImage} style={{
@@ -75,11 +75,11 @@ export default function Home() {
              </Image>           */}
  
             <Text style={{
-               fontSize:20,//Name of the user 
+               fontSize:25,//Name of the user 
                fontWeight: 'bold',
                color: 'black',
                marginTop: 20,
-             }}>Bob</Text>
+             }}>Kelly Says</Text>
 
            <TouchableOpacity>
             {TabButton(currentTab, setCurrentTab, "ViewProfile","person")}
@@ -97,15 +97,15 @@ export default function Home() {
                     {TabButton(currentTab, setCurrentTab, "Home", "home")}
                     {/* {TabButton(currentTab, setCurrentTab, "ViewProfile", home)} */}
                     {TabButton(currentTab, setCurrentTab, "Search", "search")}
-                    {TabButton(currentTab, setCurrentTab, "Parking History", "parkingHistory")} 
-                    {TabButton(currentTab, setCurrentTab, "Rush Hour", "")} 
-                     {TabButton(currentTab, setCurrentTab, "Color Blind Mode", "eye")}
-                    {TabButton(currentTab, setCurrentTab, "Dark Mode", "")} 
+                    {TabButton(currentTab, setCurrentTab, "Parking History", "flag")} 
+                    {TabButton(currentTab, setCurrentTab, "Rush Hour", "bar-chart")} 
+                     {/* {TabButton(currentTab, setCurrentTab, "Color Blind Mode", "eye")} */}
+                    {/* {TabButton(currentTab, setCurrentTab, "Dark Mode", "")}  */}
                     {TabButton(currentTab, setCurrentTab, "Settings", "settings")}
-                     {TabButton(currentTab, setCurrentTab, "Sign Up", "sign-in")} 
-                     {TabButton(currentTab, setCurrentTab, "Rate Us", "")} 
+                     {TabButton(currentTab, setCurrentTab, "Sign Up", "app-registration")} 
+                     {TabButton(currentTab, setCurrentTab, "Rate Us", "star")} 
                      {/* {TabButton(currentTab, setCurrentTab, "Sign Up", privacy)}  */}
-                    {TabButton(currentTab, setCurrentTab, "Help Center", "")} 
+                    {TabButton(currentTab, setCurrentTab, "Help Center", "help")} 
                     {TabButton(currentTab, setCurrentTab, "Notifications", "notifications")}
                    </ScrollView>
                 }

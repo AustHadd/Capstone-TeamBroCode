@@ -20,5 +20,6 @@ from . import views
 
 urlpatterns = [
     path('', views.home),
-    path('parking_spots', views.parking_spots)
+    path('make_parking_spots', views.make_parking_spots),
+    path('update_parking_spots', views.update_parking_spots)
 ]

@@ -4,86 +4,127 @@ import cv2
 import cvzone
 import dill
 import numpy as np
+import os
 from vidstab import VidStab
+import random
+import time
 
 from parkingavailability import ParkingSpotCreator
 
 
 def parking_availability():
-
     print("main starting execution")
 
     ParkingSpotCreator.create_parking_spots()
+    print("parking spots created")
 
-    # Video
-    cap = cv2.VideoCapture("parkingavailability/BirdsEyeViewParkingLot.mp4")
+    cv2.destroyAllWindows()
 
-    # initialize the video stabilizer
-    stabilizer = VidStab()
 
-    # load the dill file that contains the location of the parking spots
-    with open('CarSpacePos.pkl', 'rb') as f:
-        spacesList = dill.load(f)
+def update_availability():
+    # get the current working directory which should be the location of manage.py
+    directory = (os.getcwd())
 
-    while True:
+    lot_info = []
 
-        if cap.get(cv2.CAP_PROP_POS_FRAMES) == cap.get(cv2.CAP_PROP_FRAME_COUNT):
-            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+    # look through each file in the lots folder and updating the availability of each lot via their feed
+    for dirpath, dirnames, filenames in os.walk(directory + '/lots'):
+        for filename in filenames:
+            if filename.endswith('.mp4'):
+                # each lot has a mp4 file representing their camera feed
+                lot_name = (os.path.splitext(filename)[0])
+                print(lot_name + ' begin update')
 
-        success, img = cap.read()
+                # have open cv load the lot's footage
+                cap = cv2.VideoCapture('lots/' + lot_name + '/' + lot_name + '.mp4')
+                if not cap.isOpened():
+                    print(lot_name + ' video file Could not be opened')
 
-        # stabilize the current frame from the video
-        stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)
+                # initialize the video stabilizer
+                stabilizer = VidStab()
 
-        img_gray = cv2.cvtColor(stable_frame, cv2.COLOR_BGR2GRAY)
-        img_blur = cv2.GaussianBlur(img_gray, (3, 3), 1)
-        img_thresh = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                                           cv2.THRESH_BINARY_INV, 25, 16)
+                # load the dill file that contains the location of the parking spots for that lot
+                with open('lots/' + lot_name + '/' + lot_name + '.pkl', 'rb') as f:
+                    spacesList = dill.load(f)
 
-        # manipulate the image to make it easier to detect empty spaces
-        img_med = cv2.medianBlur(img_thresh, 5)
-        kernel = np.ones((3, 3), np.int8)
-        img_dil = cv2.dilate(img_med, kernel, iterations=1)
+                # waiting about 50 frames is enough to have made it past the initial
+                n_frames = 50
+                n_frame = 0
 
-        # for each parking space in the pickle file, create a rectangle from the pickle file's coordinates
-        for space in spacesList:
-            cv2.rectangle(stable_frame, tuple(space.positionList[0]), tuple(space.positionList[1]), (255, 0, 255), 2)
+                # ideally, you would capture the footage and read in a single frame to determine availability
+                # the initial frames when starting capture might be distorted or black, giving false readings
+                # to work around this, when updating availability, we process about 50 frames worth of footage
+                # by the end, the initial distortion from capture will be gone, and the readings will be accurate
+                while n_frame < n_frames:
+                    if cap.get(cv2.CAP_PROP_POS_FRAMES) == cap.get(cv2.CAP_PROP_FRAME_COUNT):
+                        randomframe = random.randint(1, cap.get(cv2.CAP_PROP_FRAME_COUNT))
+                        cap.set(cv2.CAP_PROP_POS_FRAMES, randomframe-1)
 
-        count = 0
+                    if n_frame == 1:
+                        randomframe = random.randint(1, cap.get(cv2.CAP_PROP_FRAME_COUNT))
+                        cap.set(cv2.CAP_PROP_POS_FRAMES, randomframe - 1)
 
-        # checks each parking space for car
-        for i in spacesList:
-            available = i.check_parking_space(img_dil, stable_frame)
-            if available:
-                color = (0, 255, 0)
-                thickness = 2
-                count += 1
-            else:
-                color = (0, 0, 255)
-                thickness = 1
+                    # read in the captured video frame by frame
+                    success, img = cap.read()
 
-            # create the rectangle with the corresponding color/thickness based on availability
-            cv2.rectangle(stable_frame, tuple(i.positionList[0]), tuple(i.positionList[1]), color, thickness)
+                    if not success:
+                        print('failure to read in ' + lot_name)
+                        break
 
-        # text showing how many available spots out of total
-        cvzone.putTextRect(stable_frame, str(count) + "/" + str(len(spacesList)) + " available spots", (0, 20),
-                           scale=1.5,
-                           thickness=2, offset=0)
+                    # stabilize the current frame from the video
+                    stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)
 
-        # show the user the video frame by frame with specified delay
-        cv2.imshow("Image", stable_frame)
-        c = cv2.waitKey(10)
+                    img_gray = cv2.cvtColor(stable_frame, cv2.COLOR_BGR2GRAY)
+                    img_blur = cv2.GaussianBlur(img_gray, (3, 3), 1)
+                    img_thresh = cv2.adaptiveThreshold(img_blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                                       cv2.THRESH_BINARY_INV, 25, 16)
 
-        # currently will stop when user inputs spacebar
-        if c > -1:
-            # write parking spot availability data to a csv in "available spots, total spots" format
-            # With a live camera this would activate at predetermined time intervals
-            with open("lot_availability.csv", 'w') as csvfile:
-                csvwriter = csv.writer(csvfile)
-                csvwriter.writerow([str(count), str(len(spacesList))])
-            print("main finished execution")
-            cv2.destroyAllWindows()
-            break
+                    # manipulate the image to make it easier to detect empty spaces
+                    img_med = cv2.medianBlur(img_thresh, 5)
+                    kernel = np.ones((3, 3), np.int8)
+                    img_dil = cv2.dilate(img_med, kernel, iterations=1)
 
-# parking_availability()
-# print("main finished execution")
+                    # for each parking space in the pickle file, create a rectangle from the pickle file's coordinates
+                    for space in spacesList:
+                        cv2.rectangle(stable_frame, tuple(space.positionList[0]), tuple(space.positionList[1]),
+                                      (255, 0, 255), 2)
+
+                    count = 0
+                    # checks each parking space for car
+                    for i in spacesList:
+                        available = i.check_parking_space(img_dil, stable_frame)
+                        if available:
+                            color = (0, 255, 0)
+                            thickness = 2
+                            count += 1
+                        else:
+                            color = (0, 0, 255)
+                            thickness = 1
+
+                        # create the rectangle with the corresponding color/thickness based on availability
+                        cv2.rectangle(stable_frame, tuple(i.positionList[0]), tuple(i.positionList[1]), color,
+                                      thickness)
+
+                    # text showing how many available spots out of total
+                    # unnecessary for simply updating availability, but helpful for debugging
+                    cvzone.putTextRect(stable_frame, str(count) + "/" + str(len(spacesList)) + " available spots",
+                                       (0, 20),
+                                       scale=1.5,
+                                       thickness=2, offset=0)
+                    # increment frame to control when we think we have read enough frames to determine availability
+                    n_frame += 1
+
+                # release the captured video
+                cap.release()
+
+                # write parking spot availability data to a csv in "lot name, available spots, total spots" format
+                lot_info.append([lot_name, str(count), str(len(spacesList))])
+                print(lot_name + ' updated')
+                cv2.destroyAllWindows()
+
+    # all the lots have been updated and we have temporarily stored their availability info
+    # now it is written into a csv to be stored and easily accessed elsewhere
+    with open("lot_availability.csv", 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        for lot in lot_info:
+            csvwriter.writerow(lot)

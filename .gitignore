@@ -1,1 +1,7 @@
 .idea/
+BackEnd/FirstDjango/FirstDjango/__pycache__/
+BackEnd/FirstDjango/userAPI/__pycache__/
+BackEnd/FirstDjango/appSettings/__pycache__/
+BackEnd/FirstDjango/__pycache__/
+BackEnd/FirstDjango/appSettings/migrations/__pycache__
+BackEnd/FirstDjango/userAPI/migrations/__pycache__

@@ -1,3 +1,7 @@
+# installing required components
+
+run the 'install_req.bat file'. It should install all necessary python libraries for running the backend server.
+
 # to run the backend server
 make sure the working directory is in BackEnd/FirstDjango/ directory.
 In this directory is the manage.py file, which is how the server and background tasks are activated

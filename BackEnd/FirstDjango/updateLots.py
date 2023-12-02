@@ -30,7 +30,7 @@ def update_availability():
     # look through each file in the lots folder and updating the availability of each lot via their feed
     for dirpath, dirnames, filenames in os.walk(directory + '/lots'):
         for filename in filenames:
-            if filename.endswith('.mp4'):
+            if filename.endswith('.pkl'):
                 # each lot has a mp4 file representing their camera feed
                 lot_name = (os.path.splitext(filename)[0])
                 print(lot_name + ' begin update')

@@ -129,7 +129,7 @@ def create_parking_spots():
         img = cv2.imread('frame_0.jpg')
 
         stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)
-
+    ##starts to open the project here
         with open('lots/' + file_name + '/' + file_name + '.pkl', 'wb') as f:
             dill.dump(spacesList, f)
 

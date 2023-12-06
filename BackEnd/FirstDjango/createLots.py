@@ -78,6 +78,28 @@ def create_parking_spots():
                     break
                 # otherwise no collision detected
 
+<<<<<<< HEAD:BackEnd/FirstDjango/createLots.py
+=======
+    directory = (os.getcwd())
+
+    # all testing TODO
+    for filename in os.listdir(directory):
+        if filename.endswith('.csv'):
+            print("hello")
+
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for dirname in dirnames:
+            if dirname == 'templates':
+                template_dir = directory + "\\" + dirname
+                print(template_dir)
+                for temp_dirpath, temp_dirnames, temp_filenames in os.walk(template_dir):
+                    for temp_filename in temp_filenames:
+                        print(temp_filename)
+        for filename in filenames:
+            if filename.endswith('.html'):
+                print("html hi")
+
+>>>>>>> adc081126b2cfb24613cc7609d6b1f9318ba26b5:parkingavailability/parkingavailability/ParkingSpotCreator.py
     # prompt the user-admin for a lot's footage to create a new lot or edit an existing one
 
     # creates the window and hides a tkinter window that appears, but isn't used
@@ -98,10 +120,13 @@ def create_parking_spots():
     file_name = os.path.basename(answer)
     file_name = (os.path.splitext(file_name)[0])
 
+<<<<<<< HEAD:BackEnd/FirstDjango/createLots.py
     directory = 'lots/' + file_name
     os.makedirs(directory, exist_ok=True)
     os.replace(answer, 'lots/' + file_name + '/' + file_name + '.mp4')
 
+=======
+>>>>>>> adc081126b2cfb24613cc7609d6b1f9318ba26b5:parkingavailability/parkingavailability/ParkingSpotCreator.py
     # remove the tkinter window since it is no longer needed
     app_window.destroy()
 
@@ -112,11 +137,21 @@ def create_parking_spots():
     except FileNotFoundError:
         # if there is no pre-existing file with the spacesList to load from make blank one
         spacesList = []
+<<<<<<< HEAD:BackEnd/FirstDjango/createLots.py
+=======
+        directory = 'lots/' + file_name
+        os.makedirs(directory, exist_ok=True)
+        os.replace(answer, 'lots/' + file_name + '/' + file_name + '.mp4')
+>>>>>>> adc081126b2cfb24613cc7609d6b1f9318ba26b5:parkingavailability/parkingavailability/ParkingSpotCreator.py
     except dill.UnpicklingError:
         print('Error Loading pickle data')
 
     # load the selected feed with cv2
+<<<<<<< HEAD:BackEnd/FirstDjango/createLots.py
     cap = cv2.VideoCapture('lots/' + file_name + '/' + file_name + '.mp4')
+=======
+    cap = cv2.VideoCapture(answer)
+>>>>>>> adc081126b2cfb24613cc7609d6b1f9318ba26b5:parkingavailability/parkingavailability/ParkingSpotCreator.py
     stabilizer = VidStab()
     success, img = cap.read()
     stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)
@@ -129,7 +164,11 @@ def create_parking_spots():
         img = cv2.imread('frame_0.jpg')
 
         stable_frame = stabilizer.stabilize_frame(input_frame=img, border_type='black', border_size=50)
+<<<<<<< HEAD:BackEnd/FirstDjango/createLots.py
     ##starts to open the project here
+=======
+
+>>>>>>> adc081126b2cfb24613cc7609d6b1f9318ba26b5:parkingavailability/parkingavailability/ParkingSpotCreator.py
         with open('lots/' + file_name + '/' + file_name + '.pkl', 'wb') as f:
             dill.dump(spacesList, f)
 
